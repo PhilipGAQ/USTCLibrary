@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.dao.ReserveDao">
+
+    <!-- 插入新的预订记录 -->
+    <insert id="addReserve" parameterType="com.library.bean.Reserve">
+        INSERT INTO reservation (reservation_id, student_id, book_id, reservation_date)
+        VALUES (null, #{student_id}, #{book_id}, sysdate())
+    </insert>
+
+
+    <!-- 根据 reservation_id 删除预订记录 -->
+    <delete id="deleteReserve" parameterType="int">
+        DELETE FROM reservation WHERE reservation_id = #{reservation_id}
+    </delete>
+
+    <!-- 查询所有预订记录 -->
+    <select id="getAllReserve" resultType="com.library.bean.Reserve">
+        SELECT * FROM reservation
+    </select>
+
+    <!-- 根据学生ID查询预订记录 -->
+    <select id="getReserveByStudentId" parameterType="long" resultType="com.library.bean.Reserve">
+        SELECT * FROM reservation WHERE student_id = #{student_id}
+    </select>
+
+    <!-- 根据图书ID查询预订记录 -->
+    <select id="getReserveByBookId" parameterType="long" resultType="com.library.bean.Reserve">
+        SELECT * FROM reservation WHERE book_id = #{book_id}
+    </select>
+
+</mapper>

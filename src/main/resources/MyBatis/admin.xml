@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.dao.AdminDao">
+    <select id="getMatchCount" resultType="int" parameterType="java.util.Map">
+        SELECT COUNT(*) FROM admin
+        WHERE admin_id = #{admin_id}
+          AND password = #{password}
+    </select>
+    <update id="resetPassword" parameterType="java.util.Map">
+        UPDATE admin SET password = #{password}
+        WHERE admin_id = #{admin_id}
+    </update>
+    <select id="getPassword" resultType="String" parameterType="long">
+        SELECT password FROM admin WHERE admin_id = #{admin_id}
+    </select>
+    <select id="getUsername" resultType="String" parameterType="long">
+        SELECT username FROM admin WHERE admin_id = #{admin_id}
+    </select>
+    <insert id="addAdmin" parameterType="com.library.bean.Admin">
+        INSERT INTO admin (admin_id, password, username, name)
+        VALUES (#{admin_id}, #{password}, #{username}, #{name})
+    </insert>
+    <update id="updateAdmin" parameterType="com.library.bean.Admin">
+        UPDATE admin SET password = #{password}, username = #{username}, name = #{name}
+        WHERE admin_id = #{admin_id}
+    </update>
+    <delete id="deleteAdmin" parameterType="long">
+        DELETE FROM admin WHERE admin_id = #{admin_id}
+    </delete>
+    <select id="getAdminById" resultType="com.library.bean.Admin" parameterType="long">
+        SELECT * FROM admin WHERE admin_id = #{admin_id}
+    </select>
+    <select id="getAllAdmins" resultType="com.library.bean.Admin">
+        SELECT * FROM admin
+    </select>
+</mapper>

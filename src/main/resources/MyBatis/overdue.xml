@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.dao.OverDueDao">
+
+    <!-- 插入新的逾期记录 -->
+    <insert id="addOverDue" parameterType="com.library.bean.OverDue">
+        INSERT INTO overdue (overdue_id, student_id, borrow_id, due_date, return_date, overdue_days, fine_amount)
+        VALUES (#{overdue_id}, #{student_id}, #{borrow_id}, #{due_date}, #{return_date}, #{overdue_days}, #{fine_amount})
+    </insert>
+
+    <!-- 更新逾期记录的返回日期 -->
+    <update id="updateReturnDate" parameterType="map">
+        UPDATE overdue
+        SET return_date = #{return_date}
+        WHERE overdue_id = #{overdue_id}
+    </update>
+
+    <!-- 更新逾期天数和罚款金额 -->
+    <update id="updateOverdueDetails" parameterType="map">
+        UPDATE overdue
+        SET overdue_days = #{overdue_days}, fine_amount = #{fine_amount}
+        WHERE overdue_id = #{overdue_id}
+    </update>
+
+    <!-- 根据 overdue_id 删除逾期记录 -->
+    <delete id="deleteOverDue" parameterType="long">
+        DELETE FROM overdue WHERE overdue_id = #{overdue_id}
+    </delete>
+
+    <!-- 查询所有逾期记录 -->
+    <select id="getAllOverDue" resultType="com.library.bean.OverDue">
+        SELECT * FROM overdue
+    </select>
+
+    <!-- 根据学生ID查询逾期记录 -->
+    <select id="getOverDueByStudentId" parameterType="long" resultType="com.library.bean.OverDue">
+        SELECT * FROM overdue WHERE student_id = #{student_id}
+    </select>
+
+    <!-- 根据借书记录ID查询逾期记录 -->
+    <select id="getOverDueByBorrowId" parameterType="long" resultType="com.library.bean.OverDue">
+        SELECT * FROM overdue WHERE borrow_id = #{borrow_id}
+    </select>
+
+</mapper>
